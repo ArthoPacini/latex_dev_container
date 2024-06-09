@@ -63,14 +63,18 @@ RUN apt-get update -y && \
     apt-get clean autoclean && \
     apt-get autoremove -y && \
     rm -rf /var/lib/{apt,dpkg,cache,log}/
-RUN tlmgr install latexindent latexmk && \
+RUN tlmgr install latexindent latexmk markdown && \
     texhash && \
     rm /usr/local/texlive/${TEXLIVE_VERSION}/texmf-var/web2c/*.log && \
     rm /usr/local/texlive/${TEXLIVE_VERSION}/tlpkg/texlive.tlpdb.main.*
 COPY --from=chktex /tmp/chktex /usr/local/bin/chktex
 COPY shell/.zshrc-specific shell/.welcome.sh /root/
 # Verify binaries work and have the right permissions
+#RUN tlmgr update --self && apt-get install -y texlive-full
+
 RUN tlmgr version && \
     latexmk -version && \
     texhash --version && \
     chktex --version
+
+
