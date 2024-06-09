@@ -1,11 +1,15 @@
 {
     "name": "project-dev",
-    "dockerComposeFile": ["docker-compose.yml"],
+    "dockerComposeFile": [
+        "docker-compose.yml"
+    ],
     "service": "vscode",
-    "runServices": ["vscode"],
+    "runServices": [
+        "vscode"
+    ],
     "shutdownAction": "stopCompose",
     "workspaceFolder": "/workspace",
-    "postCreateCommand": "",
+    "postCreateCommand": "", 
     "customizations": {
         "vscode": {
             "extensions": [
@@ -37,6 +41,13 @@
                     "%TMPFILE%",
                     "-y=defaultIndent: '%INDENT%'"
                 ]
+            },
+            "build": {
+                "dockerfile": "Dockerfile",
+                "args": {
+                    "USER_UID": "501",  // Replace with `$(id -u)` for dynamic assignment if running scripts
+                    "USER_GID": "20"   // Replace with `$(id -g)`
+                }
             }
         }
     }
